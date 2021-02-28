@@ -81,7 +81,7 @@
       (case type
         :root
         (str (if (has-call? children) "mutation " "query ")
-          "{\n" (str/join (map continue (group-inline-unions children))) "}\n")
+             "{\n" (str/join (map continue (group-inline-unions children))) "}\n")
 
         :join
         (if (= 0 query)
@@ -107,10 +107,10 @@
                            :else
                            children)]
             (str (pad-depth depth)
-              (if (::index header) (str (::index header) ": "))
-              (js-name (::selector header)) (if (seq params) (params->graphql params js-name)) " {\n"
-              (str/join (map continue (group-inline-unions children)))
-              (pad-depth depth) "}\n")))
+                 (if (::index header) (str (::index header) ": "))
+                 (js-name (::selector header)) (if (seq params) (params->graphql params js-name)) " {\n"
+                 (str/join (map continue (group-inline-unions children)))
+                 (pad-depth depth) "}\n")))
 
         :call
         (let [{::keys [mutate-join]} params
@@ -118,29 +118,29 @@
                                 children)
                             (remove (comp #{'*} :key)))]
           (str (pad-depth depth) (js-name dispatch-key)
-            (params->graphql (dissoc params ::mutate-join) js-name)
-            (if (seq children)
-              (str
-                " {\n"
-                (str/join (map continue (group-inline-unions children)))
-                (pad-depth depth)
-                "}\n"))))
+               (params->graphql (dissoc params ::mutate-join) js-name)
+               (if (seq children)
+                 (str
+                   " {\n"
+                   (str/join (map continue (group-inline-unions children)))
+                   (pad-depth depth)
+                   "}\n"))))
 
         :union
         (str (pad-depth depth) "__typename\n"
-          (str/join (map #(continue % identity) children)))
+             (str/join (map #(continue % identity) children)))
 
         :union-entry
         (str (pad-depth depth) "... on " (if (string? union-key) union-key (js-name union-key)) " {\n"
-          (str/join (map continue children))
-          (pad-depth depth) "}\n")
+             (str/join (map continue children))
+             (pad-depth depth) "}\n")
 
         :prop
         (str (pad-depth depth)
-          (if alias (str alias ": "))
-          (js-name dispatch-key)
-          (if (seq params) (params->graphql params js-name))
-          "\n")))))
+             (if alias (str alias ": "))
+             (js-name dispatch-key)
+             (if (seq params) (params->graphql params js-name))
+             "\n")))))
 
 (defn query->graphql
   "Convert query from EDN format to GraphQL string."
@@ -158,7 +158,5 @@
   (str/join (repeat 1 "  "))
   (println (query->graphql '[({:all [:id :name]}
                               {:last "csaa"})] {}))
-
-  (p/query->ast '[(call-something {:a 1 :b {:c 3}})])
   (ident-transform [:Counter/by-id 123])
   (println (query->graphql [{[:Counter/by-id 123] [:a :b]}])))
