@@ -1,9 +1,9 @@
 (ns edn-query-language.eql-graphql-test
   (:require
-    [clojure.test :refer [deftest is are run-tests testing]]
     [clojure.string :as str]
-    [edn-query-language.eql-graphql :as eql-gql]
-    [edn-query-language.core :as eql])
+    [clojure.test :refer [deftest is are run-tests testing]]
+    [edn-query-language.core :as eql]
+    [edn-query-language.eql-graphql :as eql-gql])
   #?(:clj
      (:import
        (java.util
@@ -122,11 +122,6 @@
   (query->graphql '[{(:property {::eql-gql/alias "aliased" :another "param"})
                      [:subquery]}])
 
-  (-> '[{(call {:param "value" :item/value 42}) [*]}]
-      (eql-gql/query->graphql {::eql-gql/tempid? fp/tempid?})
-      (str/replace #"\s+" " ")
-      (str/trim))
-
   (-> '[{:app/timeline
          [:entity/id
           (:user/name {::eql-gql/on :app/User})
@@ -146,17 +141,4 @@
   (-> (eql-gql/query->graphql [{[:customer/customer-id "123"]
                            [:stormshield.customer/cpf]}])
 
-      (println ))
-
-  (-> (fp/query->ast [{:search
-                       ^{::eql-gql/union-query [:__typename]}
-                       {:User  [:username]
-                        :Movie [:director]
-                        :Book  [:author]}}]))
-
-  (fp/query->ast [{:search
-                   {:User  [:username]
-                    :Movie [:director]
-                    :Book  [:author]}}])
-  (fp/ast->query (fp/query->ast '[{(call {:param "value" :item/value 42}) [:id :foo]}]))
-  (eql-gql/query->graphql `[(call {:id ~(fp/tempid) :param "value"})]))
+      (println )))
