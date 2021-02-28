@@ -1,4 +1,4 @@
-\#!/bin/bash
+#!/bin/bash
 
 lein deploy clojars
 lein vcs tag v
