@@ -1,4 +1,4 @@
-(defproject edn_query_language/project-name "DATE_VERSION"
+(defproject edn-query-language/eql-graphql "2021.02.28"
   :description ""
   :url "https://github.com/wilkerlucio/"
   :min-lein-version "2.7.0"
