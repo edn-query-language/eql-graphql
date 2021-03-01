@@ -142,17 +142,23 @@
              (if (seq params) (params->graphql params js-name))
              "\n")))))
 
+(defn ast->graphql
+  ([ast] (ast->graphql ast {}))
+  ([ast options]
+   (node->graphql
+     (merge
+       ast
+       {::js-name         name
+        ::ident-transform ident-transform
+        ::parent-children (:children ast)}
+       options))))
+
 (defn query->graphql
   "Convert query from EDN format to GraphQL string."
-  ([query] (query->graphql query {}))
+  ([query] (ast->graphql query {}))
   ([query options]
    (let [ast (eql/query->ast query)]
-     (node->graphql (merge
-                      ast
-                      {::js-name         name
-                       ::ident-transform ident-transform
-                       ::parent-children (:children ast)}
-                      options)))))
+     (ast->graphql ast options))))
 
 (comment
   (str/join (repeat 1 "  "))
