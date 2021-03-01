@@ -14,4 +14,8 @@ This repository contains helper tools to convert EQL expressions to GraphQL stri
 ;     name
 ;   }
 ; }
+
+
+;; or using directly from some AST:
+(eql-gql/ast->graph ast)
 ```
