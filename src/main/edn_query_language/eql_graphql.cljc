@@ -155,7 +155,7 @@
 
 (defn query->graphql
   "Convert query from EDN format to GraphQL string."
-  ([query] (ast->graphql query {}))
+  ([query] (query->graphql query {}))
   ([query options]
    (let [ast (eql/query->ast query)]
      (ast->graphql ast options))))
