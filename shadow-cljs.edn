@@ -1,5 +1,4 @@
 {:deps   {:aliases [:provided :test-cljs]}
- :nrepl  {:port 59121}
  :builds {:test {:target           :browser-test
                  :test-dir         "web/public/js/test"
                  :ns-regexp        "-test$"
