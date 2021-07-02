@@ -28,7 +28,7 @@
     (is (= (query->graphql [:qualified/property]) "query { property }")))
 
   (testing "on"
-    '[:hello (:other {::eql.gql/on "User"})] "query { hello ... on User { other } }")
+    '[:hello (:other {::eql-gql/on "User"})] "query { hello ... on User { other } }")
 
   (testing "params"
     (is (= (query->graphql '[(:parameterized {:foo "bar"})]) "query { parameterized(foo: \"bar\") }"))
@@ -39,8 +39,8 @@
            "query { parameterized(foo: \"ead34300-0ef6-4c31-9626-90bf18fa22c0\") }")))
 
   (testing "aliasing"
-    (is (= (query->graphql '[(:property {::eql.gql/alias "aliased"})]) "query { aliased: property }"))
-    (is (= (query->graphql '[{(:property {::eql.gql/alias "aliased" :another "param"})
+    (is (= (query->graphql '[(:property {::eql-gql/alias "aliased"})]) "query { aliased: property }"))
+    (is (= (query->graphql '[{(:property {::eql-gql/alias "aliased" :another "param"})
                               [:subquery]}]) "query { aliased: property(another: \"param\") { subquery } }")))
 
   (testing "ident"
@@ -71,9 +71,9 @@
            "query { all-items { id name } }"))
 
     (is (= (query->graphql '[{:all-items [:hello
-                                          (:other {::eql.gql/on "User"})
-                                          (:foo {::eql.gql/on "User"})
-                                          (:location {::eql.gql/on "Place"})]}])
+                                          (:other {::eql-gql/on "User"})
+                                          (:foo {::eql-gql/on "User"})
+                                          (:location {::eql-gql/on "Place"})]}])
            "query { all-items { hello ... on User { other foo } ... on Place { location } } }"))
 
     (is (= (query->graphql '[({:nodes [:id :user/name]} {:last 10})])
@@ -109,10 +109,10 @@
     (is (= (query->graphql '[(call {:param {:nested "value"}})])
            "mutation { call(param: {nested: \"value\"})}"))
 
-    (is (= (query->graphql '[(call {:param "value" :item/value 42 ::eql.gql/mutate-join [:id :foo]})])
+    (is (= (query->graphql '[(call {:param "value" :item/value 42 ::eql-gql/mutate-join [:id :foo]})])
            "mutation { call(param: \"value\", value: 42) { id foo } }"))
 
-    (is (= (query->graphql '[{(call {:param "value" :item/value 42}) [:id :foo (:other {::eql.gql/on "User"})]}])
+    (is (= (query->graphql '[{(call {:param "value" :item/value 42}) [:id :foo (:other {::eql-gql/on "User"})]}])
            "mutation { call(param: \"value\", value: 42) { id foo ... on User { other } } }"))))
 
 (comment
