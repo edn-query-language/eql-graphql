@@ -90,7 +90,7 @@ jobs:
         run: npm install
 
       - name: Compile CLJS tests
-        run: npx shadow-cljs compile ci
+        run: npx shadow-cljs compile ci -A:provided:cljs-test
 
       - name: Run CLJS tests
         run: npx karma start --single-run
