@@ -118,7 +118,7 @@
                                 children)
                             (remove (comp #{'*} :key)))]
           (str (pad-depth depth) (js-name dispatch-key)
-               (params->graphql (dissoc params ::mutate-join) js-name)
+               (if (seq params) (params->graphql (dissoc params ::mutate-join) js-name))
                (if (seq children)
                  (str
                    " {\n"

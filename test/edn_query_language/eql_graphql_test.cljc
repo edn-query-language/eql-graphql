@@ -100,6 +100,9 @@
     (is (= (query->graphql '[(call {:enum HEY})])
            "mutation { call(enum: HEY)}"))
 
+    (is (= (query->graphql '[(call)])
+           "mutation { call}"))
+
     (is (= (query->graphql '[{(call {:param "value" :item/value 42}) [:id :foo]}])
            "mutation { call(param: \"value\", value: 42) { id foo } }"))
 
