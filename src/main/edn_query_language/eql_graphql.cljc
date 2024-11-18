@@ -1,7 +1,8 @@
 (ns edn-query-language.eql-graphql
   "Tools to convert the EQL expressions to GraphQL strings."
   (:require
-    #?(:clj [clojure.data.json :as json])
+    #?(:bb  [babashka.json :as json]
+       :clj [clojure.data.json :as json])
     [clojure.string :as str]
     [edn-query-language.core :as eql]))
 
